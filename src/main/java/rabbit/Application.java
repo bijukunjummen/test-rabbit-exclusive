@@ -1,17 +1,13 @@
 package rabbit;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.stereotype.Component;
-import rabbit.config.SampleGateway;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.integration.annotation.IntegrationComponentScan;
+import org.springframework.integration.config.EnableIntegration;
 
-@Configuration
-@ComponentScan
-@EnableAutoConfiguration
+@SpringBootApplication
+@IntegrationComponentScan
+@EnableIntegration
 public class Application {
 
     public static void main(String[] args) throws Exception {

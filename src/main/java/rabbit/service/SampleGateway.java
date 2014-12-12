@@ -1,4 +1,4 @@
-package rabbit.config;
+package rabbit.service;
 
 import org.springframework.integration.annotation.Gateway;
 import org.springframework.integration.annotation.MessagingGateway;

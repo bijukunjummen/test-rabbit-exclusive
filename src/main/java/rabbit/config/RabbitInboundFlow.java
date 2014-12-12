@@ -14,13 +14,14 @@ import org.springframework.integration.dsl.IntegrationFlow;
 import org.springframework.integration.dsl.IntegrationFlows;
 import org.springframework.integration.dsl.amqp.Amqp;
 import org.springframework.integration.dsl.support.Transformers;
+import rabbit.service.Utils;
 
 @Configuration
 public class RabbitInboundFlow {
     private static final Logger logger = LoggerFactory.getLogger(RabbitInboundFlow.class);
 
     @Autowired
-    private Queue sampleQueue;
+    private RabbitConfig rabbitConfig;
 
     @Autowired
     private ConnectionFactory connectionFactory;
@@ -29,7 +30,7 @@ public class RabbitInboundFlow {
     public SimpleMessageListenerContainer simpleMessageListenerContainer() {
         SimpleMessageListenerContainer listenerContainer = new SimpleMessageListenerContainer();
         listenerContainer.setConnectionFactory(this.connectionFactory);
-        listenerContainer.setQueues(this.sampleQueue);
+        listenerContainer.setQueues(this.rabbitConfig.sampleQueue());
         listenerContainer.setConcurrentConsumers(1);
         listenerContainer.setExclusive(true);
         return listenerContainer;
@@ -41,6 +42,8 @@ public class RabbitInboundFlow {
                 .transform(Transformers.objectToString())
                 .handle((m) -> {
                     logger.info("Received payload {}", m.getPayload());
+                    Utils.sleep(3000);
+                    logger.info("Processed payload {}", m.getPayload());
                 })
                 .get();
     }
