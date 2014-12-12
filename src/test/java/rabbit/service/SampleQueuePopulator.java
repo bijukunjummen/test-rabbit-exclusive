@@ -4,7 +4,6 @@ package rabbit.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
-import rabbit.service.SampleGateway;
 
 @Component
 public class SampleQueuePopulator implements CommandLineRunner {

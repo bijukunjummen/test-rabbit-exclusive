@@ -12,14 +12,32 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 
 @Configuration
-public class RabbitConfig {
+public class RabbitTestConfig {
 
     @Autowired
     private ConnectionFactory rabbitConnectionFactory;
 
+    @Autowired
+    private RabbitConfig rabbitConfig;
+
     @Bean
-    public Queue sampleQueue() {
-        return new Queue("sample.queue", true, false, false);
+    DirectExchange sampleExchange() {
+        return new DirectExchange("sample.exchange", true, false);
     }
 
+
+    @Bean
+    Binding sampleBinding(DirectExchange sampleExchange, Queue sampleQueue) {
+        return BindingBuilder.bind(rabbitConfig.sampleQueue()).to(sampleExchange).with("exc.key");
+    }
+
+    @Bean
+    @Primary
+    public RabbitTemplate rabbitTemplate() {
+        RabbitTemplate r = new RabbitTemplate(rabbitConnectionFactory);
+        r.setExchange(sampleExchange().getName());
+        r.setChannelTransacted(true);
+        r.setRoutingKey("exc.key");
+        return r;
+    }
 }
