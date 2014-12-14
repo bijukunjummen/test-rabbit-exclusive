@@ -18,13 +18,13 @@ public class RabbitConfig {
 
     @Bean
     public Queue sampleQueue() {
-        return new Queue(&quot;sample.queue&quot;, true, false, false);
+        return new Queue("sample.queue", true, false, false);
     }
 
 }
 ----
 
-Given this sample queue, a listener which gets the messages from this queue and processes them looks like this, the flow is written using the excellent <a href="https://github.com/spring-projects/spring-integration-java-dsl/wiki/Spring-Integration-Java-DSL-Reference"><b>Spring integration Java DSL</b></a> library:
+Given this sample queue, a listener which gets the messages from this queue and processes them looks like this, the flow is written using the excellent https://github.com/spring-projects/spring-integration-java-dsl/wiki/Spring-Integration-Java-DSL-Reference[Spring integration Java DSL] library:
 
 [source,java]
 ----
@@ -52,7 +52,7 @@ public class RabbitInboundFlow {
     public IntegrationFlow inboundFlow() {
         return IntegrationFlows.from(Amqp.inboundAdapter(simpleMessageListenerContainer()))
                 .transform(Transformers.objectToString())
-                .handle((m) -&gt; {
+                .handle((m) -> {
                     logger.info(&quot;Processed  {}&quot;, m.getPayload());
                 })
                 .get();
