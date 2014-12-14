@@ -44,7 +44,7 @@ public class RabbitInboundFlow {
                 .handle((m) -> {
                     logger.info("Received  {}", m.getPayload());
                     Utils.sleep(3000);
-                    Utils.throwExceptionsPercentOfTime(30);
+                    Utils.throwExceptionsPercentOfTime(40);
                     logger.info("Processed {}", m.getPayload());
                 }, c -> c.advice(this.retryAdvice()))
                 .get();
